@@ -19,3 +19,12 @@ module.exports.signIn = function(req, res){
         title: "Codeial | Sign In"
     })
 }
+
+// get the sign up data
+module.exports.create=function(req, res){
+    //   TODO later
+}
+
+module.exports.createSession=function(req, res){
+    // TODO later
+}
