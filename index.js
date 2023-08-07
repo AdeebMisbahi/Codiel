@@ -1,5 +1,7 @@
-// acquire express 
+// acquire express  & cookie
 const express=require('express');
+const cookieParser = require('cookie-parser');
+
 // app will run on this port
 const port=3000;
 const app=express();
@@ -7,6 +9,10 @@ const app=express();
 const db=require('./config/mongoose')
 // require expres-ejs-layout
 const expressLayouts=require('express-ejs-layouts');
+
+app.use(express.urlencoded());
+
+app.use(cookieParser());
 // access static file
 app.use(express.static('./assets'));
 // and then use express layouts
