@@ -22,6 +22,9 @@ if(user){
 
 // render the sign up page
 module.exports.signUp = function(req, res){
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
     return res.render('user_sign_up', {
         title: "Codeial | Sign Up"
     })
@@ -30,6 +33,9 @@ module.exports.signUp = function(req, res){
 
 // render the sign in page
 module.exports.signIn = function(req, res){
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
     return res.render('user_sign_in', {
         title: "Codeial | Sign In"
     })
@@ -59,37 +65,6 @@ module.exports.create = async function (req, res) {
 
 // sign in and create a session for the user
 module.exports.createSession =async function(req, res){
-    // steps to authenticate
-    // find the user
-    // handle user found
-    // handle user which dosn't match
-    // handle session creation
-    // handle user not found
-    try {
-        const { email, password } = req.body;
-        console.log('Email:', email); // Add this line for debugging
-
-        // Find the user by email
-        const user = await User.findOne({ email });
-
-        if (user) {
-            // Handle user found
-            if (user.password === password) {
-                // Create a session or set authentication flag as needed
-                // For the sake of example, let's set a session variable
-                res.cookie('user_id', user.id);
-                return res.redirect('/users/profile'); // Redirect to the dashboard 
-            } else {
-                // Handle incorrect password
-                return res.redirect('/users/sign-in');
-            }
-        } else {
-            // Handle user not found
-            return res.redirect('/users/sign-in');
-        }
-    } catch (error) {
-        // Handle the error appropriately
-        console.error('An error occurred:', error);
-    }
+        return res.redirect('/');
 
 }
