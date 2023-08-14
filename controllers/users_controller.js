@@ -2,6 +2,8 @@ const User = require('../models/user');
 
 
 module.exports.profile = async function(req, res){
+try{
+   
    if(req.cookies.user_id){
    
         const user=await User.findById(req.cookies.user_id);
@@ -15,6 +17,11 @@ if(user){
         
 }else{
     return res.redirect('/users/sign-in')
+}
+}
+catch (error) {
+    // Handle errors by logging
+    console.error('Error fetching user profile:', error);
 }
 
 }
@@ -64,7 +71,7 @@ module.exports.create = async function (req, res) {
 
 
 // sign in and create a session for the user
-module.exports.createSession =async function(req, res){
-        return res.redirect('/');
-
+module.exports.createSession =function(req, res){
+      return res.redirect('/');
+      
 }
