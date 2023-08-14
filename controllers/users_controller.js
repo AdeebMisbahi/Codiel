@@ -3,11 +3,13 @@ const User = require('../models/user');
 
 module.exports.profile = async function(req, res){
 try{
-   
+//    console.log('done')
    if(req.cookies.user_id){
-   
+   console.log(req.cookies.user_id)
         const user=await User.findById(req.cookies.user_id);
+        console.log(user);
 if(user){
+
     return res.render('user_profile', {
         title:"user profile",
         user: user,
@@ -61,8 +63,15 @@ module.exports.create = async function (req, res) {
             await User.create(req.body);
             return res.redirect('/users/sign-in');
         } else {
+            
+ /*
+ this is not use for now ==> 
+ res.cookie('user_id', user._id.toString());
+ */
+
             return res.redirect('back');
         }
+
     } catch (error) {
         // Handle the error appropriately
         console.error('An error occurred:', error);
@@ -72,6 +81,7 @@ module.exports.create = async function (req, res) {
 
 // sign in and create a session for the user
 module.exports.createSession =function(req, res){
+    res.cookie('user_id', req.user._id.toString());
       return res.redirect('/');
       
 }

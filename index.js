@@ -1,15 +1,14 @@
 // acquire express  & cookie
 const express=require('express');
-
 const cookieParser = require('cookie-parser');
-
+const app=express();
 // app will run on this port
 const port=3000;
-const app=express();
-// acquire mongodb database
-const db=require('./config/mongoose')
 // require expres-ejs-layout
 const expressLayouts=require('express-ejs-layouts');
+// acquire mongodb database
+const db=require('./config/mongoose')
+// used for cookie
 // require express-session
 const session=require('express-session');
 // require passport and passport-local
@@ -44,7 +43,7 @@ app.use(session({
 
     store: MongoStore.create(
         {
-        mongoUrl:('mongodb://127.0.0.1/codeial_development'),
+        mongoUrl:('mongodb://127.0.0.1:27017/codeial_development'),
         mongooseConnection:db,
         autoRemove: 'disabled'
         },
