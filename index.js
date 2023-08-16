@@ -15,7 +15,40 @@ const session=require('express-session');
 const passport=require('passport');
 const passportLocal=require('./config/passport-local-strategy');
 const MongoStore=require('connect-mongo');
-  
+// related to convert scss file to css
+const path = require('path');
+const sass=require('node-sass');
+const scssSrcDir = path.join(__dirname, 'assets', 'scss');
+const cssDestDir = path.join(__dirname, 'assets', 'css');
+
+// Custom middleware to compile SCSS to CSS
+app.use((req, res, next) => {
+  if (req.url.endsWith('.css')) {
+    const scssFilePath = path.join(scssSrcDir, req.url.replace('/css/', '').replace('.css', '.scss'));
+    
+    sass.render({
+      file: scssFilePath,
+      outputStyle: 'expanded' // Adjust the output style as needed
+    }, (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+        return;
+      }
+      
+      res.setHeader('Content-Type', 'text/css');
+      res.send(result.css);
+    });
+  } else {
+    next();
+  }
+});
+
+// Serve static files from the CSS directory
+app.use('/css', express.static(cssDestDir));  // converted scss to css 
+
+
+
 app.use(express.urlencoded());
 
 app.use(cookieParser());
