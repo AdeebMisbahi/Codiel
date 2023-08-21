@@ -3,23 +3,20 @@ const User = require('../models/user');
 
 module.exports.profile = async function(req, res){
 try{
-//    console.log('done')
-   if(req.cookies.user_id){
-   console.log(req.cookies.user_id)
-        const user=await User.findById(req.cookies.user_id);
-        console.log(user);
+
+//    if(req.cookies.user_id){
+        const user=await User.findById(req.params.id);
+    
 if(user){
 
     return res.render('user_profile', {
-        title:"user profile",
-        user: user,
+        title: 'User Profile',
+        profile_user: user
     })
 }
    return res.redirect('/users/sign-in')
         
-}else{
-    return res.redirect('/users/sign-in')
-}
+
 }
 catch (error) {
     // Handle errors by logging
@@ -28,6 +25,21 @@ catch (error) {
 
 }
 
+module.exports.update=async function(req, res){
+try {
+        if(req.user.id==req.params.id){
+        const user=await User.findByIdAndUpdate(req.params.id, {name:req.body.name,email:req.body.email})
+        if(user){
+            return res.redirect('back')
+        }
+    }else{
+        return res.status(401).send('unautherized')
+    }
+    
+} catch (error) {
+               console.log('Error updating profile', error);    
+}
+}
 
 // render the sign up page
 module.exports.signUp = function(req, res){
