@@ -94,7 +94,6 @@ app.use(passport.session());
 
 app.use(passport.setAuthenticatedUser);
 app.use(flash());
-
 app.use(customMware.setFlash)
 
 // use express router
