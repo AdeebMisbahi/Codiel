@@ -88,8 +88,9 @@ module.exports.create = async function (req, res) {
 
 // sign in and create a session for the user
 module.exports.createSession =function(req, res){
+    
     res.cookie('user_id', req.user._id.toString());
-    req.flash('succes', 'Logged in successfully')
+    req.flash('success', 'Logged in successfully')
       return res.redirect('/');
       
 }
