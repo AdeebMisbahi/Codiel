@@ -76,11 +76,6 @@ module.exports.create = async function (req, res) {
             return res.redirect('/users/sign-in');
         } else {
             
- /*
- this is not use for now ==> 
- res.cookie('user_id', user._id.toString());
- */
-
             return res.redirect('back');
         }
 
@@ -94,6 +89,7 @@ module.exports.create = async function (req, res) {
 // sign in and create a session for the user
 module.exports.createSession =function(req, res){
     res.cookie('user_id', req.user._id.toString());
+    req.flash('succes', 'Logged in successfully')
       return res.redirect('/');
       
 }
@@ -107,7 +103,7 @@ module.exports.destroySession = function(req, res){
             console.error('Error during logout:', err);
             return res.redirect('/');
         }
-        
+        req.flash('success', 'You have logged out ')
         return res.redirect('/');
     });
 }
