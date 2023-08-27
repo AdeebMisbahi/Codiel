@@ -58,6 +58,8 @@ app.use(cookieParser());
 app.use(express.static('./assets'));
 // and then use express layouts
 app.use(expressLayouts);
+// 
+app.use('/uploads', express.static(__dirname + '/uploads'))
 // extract style and scripts from sub pages into the layout 
 app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
